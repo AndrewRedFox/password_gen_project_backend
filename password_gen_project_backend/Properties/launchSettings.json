@@ -1,0 +1,13 @@
+﻿{
+  "profiles": {
+    "password_gen_project_backend": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:5010;https://localhost:7222",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
