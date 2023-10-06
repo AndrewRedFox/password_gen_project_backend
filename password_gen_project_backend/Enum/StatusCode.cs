@@ -1,11 +1,11 @@
-﻿namespace password_gen_project_backend.Enum
+﻿
+public enum StatusCode
 {
-    public enum StatusCode
-    {
-        UserNotFound = 0,
+    UserNotFound = 0,
 
-        OK = 200,
+    OK = 200,
 
-        InternalServerError = 500
-    }
+    InternalServerError = 500,
+
+    LoginAlreadyUse = 100,
 }

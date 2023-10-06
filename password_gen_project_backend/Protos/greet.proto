@@ -1,27 +1,13 @@
 syntax = "proto3";
-
 option csharp_namespace = "password_gen_project_backend";
-
 package greet;
 
 
 service Greeter {
   
-  rpc SayHello (HelloRequest) returns (HelloReply);
-  //rpc UserAuth (UserDataRequest) returns (TokenReply);
-  //rpc UserRegister() returns ();
+  rpc UserAuth (UserDataRequest) returns (TokenReply);
+  rpc UserRegister(RegisterRequest) returns (RegisterReply);
 }
-
-
-message HelloRequest {
-  string name = 1;
-}
-
-
-message HelloReply {
-  string message = 1;
-}
-
 
 message UserDataRequest {
 	string login = 1;
@@ -31,5 +17,15 @@ message UserDataRequest {
 message TokenReply {
 	string token = 1;
 	//Error error = 2; 
+}
+
+message RegisterRequest{
+	string login = 1;
+	string password =2;
+	string confirmPassword =3;
+}
+
+message RegisterReply{
+	StatusCode replyCode = 1;
 }
 

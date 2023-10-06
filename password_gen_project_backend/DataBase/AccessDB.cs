@@ -4,11 +4,11 @@ public class AccessDB
 {
     private const string connectionString = "mongodb://localhost:27017";
     private const string databaseName = "simple_db";
-    private const string userCollection = "users";
+    private const string UserCollection = "users";
 
     private IMongoCollection<T> connectToMongo<T>(in string collection)
     {
-        var client = MongoClient(connectionString);
+        var client = new MongoClient(connectionString);
         var db = client.GetDatabase(databaseName);
         return db.GetCollection<T>(collection);
     }
@@ -36,7 +36,7 @@ public class AccessDB
     public Task updateListOfPassword(UserModel user)
     {
         var userCollection = connectToMongo<UserModel>(UserCollection);
-        var filter = Builders<UserModel>.Filter.Eq("id", user.id);
+        var filter = Builders<UserModel>.Filter.Eq("login", user.login);
         return userCollection.ReplaceOneAsync(filter, user, new ReplaceOptions { IsUpsert = true });
     }
 

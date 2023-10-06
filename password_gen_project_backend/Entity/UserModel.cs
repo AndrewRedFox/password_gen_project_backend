@@ -1,4 +1,6 @@
-﻿using password_gen_project_backend.Enum;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using password_gen_project_backend.Enum;
 
 //namespace password_gen_project_backend.UserModel
 public class UserModel
@@ -8,11 +10,17 @@ public class UserModel
         this.login = login;
         this.password = password;
         role = roles.USER;
-        listOfPassword = new Dictionary<string, string> { ["login"]= "password" };
-    } 
+        listOfPassword = new Dictionary<string, string> { [login] = password };
+    }
 
-        
-    public long id { get; set; }
+    public UserModel()
+    {
+
+    }
+
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string id { get; set; }
     public string login { get; set; }
     public string password { get; set; }
     public roles role { get; set; }
