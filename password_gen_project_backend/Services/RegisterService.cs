@@ -13,9 +13,10 @@ namespace password_gen_project_backend.Services
             var loginExists = await db.getUserByLogin(registerModel.login);
 
             if (loginExists.Count != 0)
-            {
                 return false;
-            }
+            if(registerModel.password != registerModel.passwordConfirm)
+                return false;
+            
             await db.createUser(new UserModel(id, registerModel.login, HashPasswordHelper.HashPassword(registerModel.password)) { });
             id += 1;
             return true;

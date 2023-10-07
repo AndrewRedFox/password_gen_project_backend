@@ -1,18 +1,24 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
+using password_gen_project_backend.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Principal;
 using System.Text;
 
 public class TokensController
 {
-    public bool validate(string Token, UserModel model)
+    public bool validate(string Token, string validIssuer, string dbToken)
     {
+        //сравнить токен в БД и у пользователя
+        if (!Equals(Token, dbToken))
+            return false;
+        
+
         TokenValidationParameters validationParameters = new TokenValidationParameters()
         {
             ValidateAudience = true,
             ValidateIssuer = true,
-            ValidIssuer = model.login,
+            ValidIssuer = validIssuer,
             ValidAudience = "client",
             ValidateLifetime = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey.secretKey)),

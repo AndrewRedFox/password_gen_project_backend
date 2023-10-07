@@ -6,6 +6,7 @@ package greet;
 service Greeter {
   rpc UserAuth (UserDataRequest) returns (TokenReply);
   rpc UserRegister(RegisterRequest) returns (RegisterReply);
+  rpc UserGetInfo(InfoRequest) returns (InfoReply);
 }
 
 message UserDataRequest {
@@ -44,5 +45,24 @@ message RegisterReply{
 	}
 
 	StatusCode replyCode = 1;
+}
+
+message InfoRequest{
+	string accessToken =1;
+	string refreshToken = 2;
+	string login = 3;
+}
+
+message InfoReply{
+	enum StatusCode
+	{
+		Unlogin = 0;
+		Ok = 200;
+	}
+
+	string list = 1;
+	StatusCode replyCode = 2;
+	string accessToken = 3;
+	string refreshToken = 4;
 }
 

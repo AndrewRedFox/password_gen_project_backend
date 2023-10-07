@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MongoDB.Driver;
 //using NUnit.Framework;
-using password_gen_project_backend.DataAcess;
 using password_gen_project_backend.Helpers;
 
 namespace password_gen_project_backend.Tests

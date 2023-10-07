@@ -52,12 +52,36 @@ namespace password_gen_project_backend.Services
             }
             return Task.FromResult(new TokenReply
             {
-                AccessToken = null,
-                RefreshToken = null,
+                AccessToken = "",
+                RefreshToken = "",
                 Login = request.Login,
                 ReplyCode = TokenReply.Types.StatusCode.IncorrectPassword,
             });
+        }
 
+        public override Task<InfoReply> UserGetInfo(InfoRequest request, ServerCallContext context)
+        {
+            AccountService accountService = new AccountService();
+            string info = accountService.getInfo(request.AccessToken, request.RefreshToken, request.Login).Result;
+
+            if(Equals(info, "Non"))
+            {
+                return Task.FromResult(new InfoReply
+                {
+                    List = info,
+                    ReplyCode = InfoReply.Types.StatusCode.Unlogin,
+                    AccessToken = "Non",
+                    RefreshToken = "Non",
+                });
+            }
+
+            return Task.FromResult(new InfoReply
+            {
+                List = info,
+                ReplyCode = InfoReply.Types.StatusCode.Ok,
+                AccessToken = accountService.getNewAccessToken().Result,
+                RefreshToken = accountService.getNewRefreshToken().Result,
+            });
         }
     }
 }
