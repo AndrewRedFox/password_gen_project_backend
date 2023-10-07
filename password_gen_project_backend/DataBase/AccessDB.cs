@@ -20,10 +20,17 @@ public class AccessDB
         return result.ToList();
     }
 
-    public async Task<List<UserModel>> getUserByLogin(UserModel user)
+    public async Task<List<UserModel>> getUserByUser(UserModel user)
     {
         var userCollection = connectToMongo<UserModel>(UserCollection);
         var result = await userCollection.FindAsync(c =>  c.login == user.login);
+        return result.ToList();
+    }
+
+    public async Task<List<UserModel>> getUserByLogin(string login)
+    {
+        var userCollection = connectToMongo<UserModel>(UserCollection);
+        var result = await userCollection.FindAsync(c => c.login == login);
         return result.ToList();
     }
 
@@ -33,13 +40,11 @@ public class AccessDB
         return userCollection.InsertOneAsync(user);
     }
 
-    public Task updateListOfPassword(UserModel user)
+    public Task updateList(UserModel user)
     {
         var userCollection = connectToMongo<UserModel>(UserCollection);
         var filter = Builders<UserModel>.Filter.Eq("login", user.login);
-        return userCollection.ReplaceOneAsync(filter, user, new ReplaceOptions { IsUpsert = true });
+        return userCollection.ReplaceOneAsync(filter, user, new ReplaceOptions { IsUpsert = false });
     }
-
-
 }
 
