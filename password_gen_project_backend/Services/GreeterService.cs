@@ -5,8 +5,7 @@ using password_gen_project_backend.Entity;
 namespace password_gen_project_backend.Services
 {
     public class GreeterService : Greeter.GreeterBase
-    {
-        UserModel _user;
+    {       
         private readonly ILogger<GreeterService> _logger;
         public GreeterService(ILogger<GreeterService> logger)
         {
@@ -64,7 +63,7 @@ namespace password_gen_project_backend.Services
             AccountService accountService = new AccountService();
             string info = accountService.getInfo(request.AccessToken, request.RefreshToken, request.Login).Result;
 
-            if(Equals(info, "Non"))
+            if (Equals(info, "Non"))
             {
                 return Task.FromResult(new InfoReply
                 {
@@ -79,6 +78,18 @@ namespace password_gen_project_backend.Services
             {
                 List = info,
                 ReplyCode = InfoReply.Types.StatusCode.Ok,
+                AccessToken = accountService.getNewAccessToken().Result,
+                RefreshToken = accountService.getNewRefreshToken().Result,
+            });
+        }
+
+        public override Task<UpdateReply> UserUpdateInfo(UpdateRequest request, ServerCallContext context)
+        {
+            AccountService accountService = new AccountService();
+            bool flag = accountService.updateInfo(request.AccessToken, request.RefreshToken, request.Login, request.List).Result;
+
+            return Task.FromResult(new UpdateReply
+            {
                 AccessToken = accountService.getNewAccessToken().Result,
                 RefreshToken = accountService.getNewRefreshToken().Result,
             });

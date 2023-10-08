@@ -7,6 +7,7 @@ service Greeter {
   rpc UserAuth (UserDataRequest) returns (TokenReply);
   rpc UserRegister(RegisterRequest) returns (RegisterReply);
   rpc UserGetInfo(InfoRequest) returns (InfoReply);
+  rpc UserUpdateInfo(UpdateRequest) returns (UpdateReply);
 }
 
 message UserDataRequest {
@@ -64,5 +65,17 @@ message InfoReply{
 	StatusCode replyCode = 2;
 	string accessToken = 3;
 	string refreshToken = 4;
+}
+
+message UpdateRequest {
+	string accessToken =1;
+	string refreshToken = 2;
+	string login = 3;
+	string list = 4;
+}
+
+message UpdateReply {
+	string accessToken = 1;
+	string refreshToken = 2;
 }
 

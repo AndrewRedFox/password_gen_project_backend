@@ -5,6 +5,7 @@ namespace password_gen_project_backend.Services
 {
     public class AuthService
     {
+        //заменить foreach на model[0]
         private AccessDB db = new AccessDB();
         private UserModel model = new UserModel();
         public async Task<bool> auth(string login, string password)

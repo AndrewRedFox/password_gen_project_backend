@@ -10,18 +10,13 @@ namespace password_gen_project_backend.Services
         {
             var users = await db.getUserByLogin(login);
             TokensController tokensController = new TokensController();
-            foreach (var user in users)
-            {
-                model = user;
-            }
+            model = users[0];
 
             if(tokensController.validate(accessToken, model.login, model.accessToken))
                 return getListOfPassword();
             else if(tokensController.validate(refreshToken, model.login, model.refreshToken))
             {
                 CreateTokens createTokens = new CreateTokens();
-                /*string newAccessToken = createTokens.createAccessToken(model);
-                string newRefreshToken = createTokens.createRefreshToken(model);*/
                 model.accessToken = getNewAccessToken(createTokens);
                 model.refreshToken = getNewRefreshToken(createTokens);
                 await db.updateList(model);
@@ -29,6 +24,28 @@ namespace password_gen_project_backend.Services
                 return getListOfPassword();
             }
             return "Non";
+        }
+
+        public async Task<bool> updateInfo(string accessToken, string refreshToken, string login, string list)
+        {
+            var users = await db.getUserByLogin(login);
+            TokensController tokensController = new TokensController();
+            model = users[0]; 
+
+            if (tokensController.validate(accessToken, model.login, model.accessToken))
+            {
+                model.listOfPassword = updateList(list);
+                await db.updateList(model);
+            }
+            else if (tokensController.validate(refreshToken, model.login, model.refreshToken))
+            {
+                CreateTokens createTokens = new CreateTokens();
+                model.accessToken = getNewAccessToken(createTokens);
+                model.refreshToken = getNewRefreshToken(createTokens);
+                model.listOfPassword = updateList(list);
+                await db.updateList(model);
+            }
+            return true;
         }
 
         public string getNewAccessToken(CreateTokens createTokens)
@@ -59,6 +76,23 @@ namespace password_gen_project_backend.Services
                 list += "." + item.First + "/" + item.Second;//stringBuilder use
             }
             return list;
+        }
+
+        private List<Pair<string,string>> updateList(string list)
+        {
+            List<Pair<string,string>> listOfPair = new List<Pair<string,string>>();
+            var l = list.Split('.').ToList();
+            l.RemoveAll(s => s == "");
+
+            foreach(var pair in l)
+            {
+                Pair<string, string> p = new Pair<string, string>();
+                string[] words = pair.Split(new char[] { '/' });
+                p.First = words[0];
+                p.Second = words[1];
+                listOfPair.Add(p);
+            }
+            return listOfPair;
         }
     }
 }
