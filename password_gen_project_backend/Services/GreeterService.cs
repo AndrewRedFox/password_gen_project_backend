@@ -36,6 +36,7 @@ namespace password_gen_project_backend.Services
             bool isAuth = authService.auth(request.Login, request.Password).Result;
             if (isAuth)
             {
+                //перенести в authService
                 CreateTokens createTokens = new CreateTokens();
                 string accessToken = createTokens.createAccessToken(authService.GetUserModel());
                 string refreshToken = createTokens.createRefreshToken(authService.GetUserModel());
