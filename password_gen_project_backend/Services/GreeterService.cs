@@ -12,10 +12,10 @@ namespace password_gen_project_backend.Services
             _logger = logger;
         }
 
-        public override Task<RegisterReply> UserRegister(RegisterRequest request, ServerCallContext context)
+        public override  Task<RegisterReply> UserRegister(RegisterRequest request, ServerCallContext context)
         {
             RegisterService registerService = new RegisterService();
-            bool registerSuccess = registerService.register(new RegisterModel(request.Login, request.Password, request.PasswordConfirm)).Result;
+            bool registerSuccess =  registerService.register(new RegisterModel(request.Login, request.Password, request.PasswordConfirm)).Result;
 
             if (registerSuccess)
             {

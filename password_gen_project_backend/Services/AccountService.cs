@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.IdentityModel.Tokens;
+
 namespace password_gen_project_backend.Services
 {
     public class AccountService
@@ -10,9 +12,13 @@ namespace password_gen_project_backend.Services
         {
             var users = await db.getUserByLogin(login);
             TokensController tokensController = new TokensController();
+            if (users.IsNullOrEmpty())
+            {
+                return "Non";
+            }
             model = users[0];
 
-            if(tokensController.validate(accessToken, model.login, model.accessToken))
+            if (tokensController.validate(accessToken, model.login, model.accessToken))
                 return getListOfPassword();
             else if(tokensController.validate(refreshToken, model.login, model.refreshToken))
             {
