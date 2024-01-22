@@ -11,8 +11,8 @@ public class UserModel
         this.login = login;
         this.password = password;
         role = roles.USER;
-        listOfPassword = new List<Pair<string, string>> ();
-        listOfPassword.Add (new Pair<string, string> ("loginApp", "passwordApp"));
+        listOfPassword = new List<Pair<string, string, string>> ();
+        //listOfPassword.Add (new Pair<string, string> ("loginApp", "passwordApp"));
     }
 
     public UserModel()
@@ -28,6 +28,6 @@ public class UserModel
     public roles role { get; set; }
     public string accessToken { get; set; }
     public string refreshToken { get; set; }
-    public List<Pair<string , string>> listOfPassword {  get; set; }
+    public List<Pair<string , string, string>> listOfPassword {  get; set; }
 }
 

@@ -73,23 +73,24 @@ namespace password_gen_project_backend.Services
             string list = "";
             foreach (var item in model.listOfPassword)
             {
-                list += "." + item.First + "/" + item.Second;//stringBuilder use
+                list += "." + item.First + "/" + item.Second + "/" + item.Third;//stringBuilder use
             }
             return list;
         }
 
-        private List<Pair<string,string>> updateList(string list)
+        private List<Pair<string,string, string>> updateList(string list)
         {
-            List<Pair<string,string>> listOfPair = new List<Pair<string,string>>();
+            List<Pair<string,string, string>> listOfPair = new List<Pair<string, string, string>>();
             var l = list.Split('.').ToList();
             l.RemoveAll(s => s == "");
 
             foreach(var pair in l)
             {
-                Pair<string, string> p = new Pair<string, string>();
+                Pair<string, string, string> p = new Pair<string, string, string>();
                 string[] words = pair.Split(new char[] { '/' });
                 p.First = words[0];
                 p.Second = words[1];
+                p.Third = words[2];
                 listOfPair.Add(p);
             }
             return listOfPair;

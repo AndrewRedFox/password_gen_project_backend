@@ -6,7 +6,7 @@ namespace password_gen_project_backend.Services
     public class RegisterService
     {
         private AccessDB db = new AccessDB();
-        private static int id = 0;
+        //private static int id = 5;
         public async Task<bool> register(RegisterModel registerModel)
         {
             AccessDB db = new AccessDB();
@@ -17,8 +17,7 @@ namespace password_gen_project_backend.Services
             if(registerModel.password != registerModel.passwordConfirm)
                 return false;
             
-            await db.createUser(new UserModel(id, registerModel.login, HashPasswordHelper.HashPassword(registerModel.password)) { });
-            id += 1;
+            await db.createUser(new UserModel(Id.get(), registerModel.login, HashPasswordHelper.HashPassword(registerModel.password)) { });
             return true;
         }
 
