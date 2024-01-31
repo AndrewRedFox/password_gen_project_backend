@@ -5,6 +5,7 @@ public class AccessDB
     private const string connectionString = "mongodb://localhost:27017";
     private const string databaseName = "simple_db";
     private const string UserCollection = "users";
+    private const string IdCollection = "ids";
 
     private IMongoCollection<T> connectToMongo<T>(in string collection)
     {

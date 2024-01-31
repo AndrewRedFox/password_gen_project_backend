@@ -6,10 +6,10 @@ namespace password_gen_project_backend.Services
     public class RegisterService
     {
         private AccessDB db = new AccessDB();
-        //private static int id = 5;
         public async Task<bool> register(RegisterModel registerModel)
         {
             AccessDB db = new AccessDB();
+            //int id = await db.getIdDB();
             var loginExists = await db.getUserByLogin(registerModel.login);
 
             if (loginExists.Count != 0)
